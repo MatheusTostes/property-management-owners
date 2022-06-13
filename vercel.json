@@ -13,7 +13,8 @@
     }
   ],
   "env": {
-    "DATABASE_URL": "postgres://hppcmwjo:ITGw4L_CZt83sfBkbx08YPKl1f4A-JY_@kesavan.db.elephantsql.com/hppcmwjo"
+    "DATABASE_URL": "postgres://hppcmwjo:ITGw4L_CZt83sfBkbx08YPKl1f4A-JY_@kesavan.db.elephantsql.com/hppcmwjo",
+    "SECRET": "ultrasecreto"
   },
   "headers": [
     {

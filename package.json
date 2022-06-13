@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/MatheusTostes/property-management-owners/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/MatheusTostes/property-management-owners#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",

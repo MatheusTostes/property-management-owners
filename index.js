@@ -1,10 +1,12 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const port = 3000;
 const db = require("./queries");
 const cors = require("cors");
 const jwt = require('jsonwebtoken')
-const SECRET = 'ultrasecreto'
+const SECRET = process.env.SECRET
 
 app.use(cors({
   origin: '*'
