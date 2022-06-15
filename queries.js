@@ -98,10 +98,10 @@ const updateOwner = (request, response) => {
 };
 
 const deleteOwner = (request, response) => {
-  const id = parseInt(request.params.id);
+  const { id } = request
 
   pool.query(
-    `DELETE FROM products WHERE product_id = ${id}`,
+    `DELETE FROM owners WHERE owner_id = ${id}`,
     // [id],
     (error, results) => {
       if (error) {
