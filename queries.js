@@ -1,12 +1,47 @@
 require("dotenv").config();
+const jwt = require('jsonwebtoken')
+const SECRET = process.env.SECRET
 
 const Pool = require("pg").Pool;
 const databaseConfig = { connectionString: process.env.DATABASE_URL };
 const pool = new Pool(databaseConfig);
 
-const getProducts = (request, response) => {
+const loginOwner = (request, response) => {
+  const { email, password } = request.body
   pool.query(
-    "SELECT * FROM products ORDER BY product_id ASC",
+    `SELECT * FROM owners WHERE email = '${email}'`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+
+      const id = results.rows[0].owner_id
+      const email = results.rows[0].email
+      const pass = results.rows[0].password
+
+      if (pass === password) {
+        const token = jwt.sign(
+          {
+            id,
+            email,
+          },
+            SECRET,
+          {
+            expiresIn: 10800 
+          }
+        )
+        return response.json({ auth: true, token })
+      }
+
+      response.status(401).end()
+    },
+    );
+}
+
+const getOwner = (request, response) => {
+  const { id } = request
+  pool.query(
+    `SELECT * FROM owners WHERE owner_id ='${id}'`,
     (error, results) => {
       if (error) {
         throw error;
@@ -16,28 +51,27 @@ const getProducts = (request, response) => {
   );
 };
 
-const getProductById = (request, response) => {
-  const id = parseInt(request.params.id);
+// const getProductById = (request, response) => {
+//   const id = parseInt(request.params.id);
 
-  pool.query(
-    `SELECT * FROM products WHERE product_id = ${id}`,
-    // [id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).json(results.rows);
-    }
-  );
-};
+//   pool.query(
+//     `SELECT * FROM products WHERE product_id = ${id}`,
+//     // [id],
+//     (error, results) => {
+//       if (error) {
+//         throw error;
+//       }
+//       response.status(200).json(results.rows);
+//     }
+//   );
+// };
 
 const createOwner = (request, response) => {
-  const { name, price, description, image, category, promo } = request.body;
+  const { name, picture, company, phone, email, password } = request.body;
 
   pool.query(
-    // `INSERT INTO products (name, price, description, image, category, promo) VALUES (${name}, ${price}, ${description}, ${image}, ${category}, ${promo})`,
-    `INSERT INTO products (name, price, description, image, category, promo) VALUES ($1, $2, $3, $4, $5, $6)`,
-    [name, price, description, image, category, promo],
+    `INSERT INTO owners (name, picture, company, phone, email, password) VALUES ($1, $2, $3, $4, $5, $6)`,
+    [name, picture, company, phone, email, password],
     (error, results) => {
       if (error) {
         throw error;
@@ -63,7 +97,7 @@ const updateOwner = (request, response) => {
   );
 };
 
-const deleteProduct = (request, response) => {
+const deleteOwner = (request, response) => {
   const id = parseInt(request.params.id);
 
   pool.query(
@@ -79,9 +113,9 @@ const deleteProduct = (request, response) => {
 };
 
 module.exports = {
-  getProducts,
-  getProductById,
+  getOwner,
   createOwner,
   updateOwner,
-  deleteProduct,
+  deleteOwner,
+  loginOwner,
 };
