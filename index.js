@@ -48,7 +48,7 @@ function verifyJWT(request, response, next) {
 app.post('/login', db.loginOwner);
 app.get("/owner", verifyJWT, db.getOwner);
 app.post("/owner", db.createOwner);
-// app.put("/owner/:id", verifyJWT, db.updateOwner);
+app.put("/owner", verifyJWT, db.updateOwner);
 // app.get("/products/:id", db.getProductById);
 // app.delete("/products/:id", verifyJWT, db.deleteProduct);
 

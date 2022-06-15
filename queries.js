@@ -82,12 +82,12 @@ const createOwner = (request, response) => {
 };
 
 const updateOwner = (request, response) => {
-  const id = parseInt(request.params.id);
-  const { name, price, description, image, category, promo } = request.body;
+  const { id } = request
+  const { name, picture, company, phone, email, password } = request.body;
 
   pool.query(
-    'UPDATE products SET name = $1, price = $2, description = $3, image = $4, category = $5, promo = $6 WHERE product_id = $7',
-    [name, price, description, image, category, promo, id],
+    'UPDATE owners SET name = $1, picture = $2, company = $3, phone = $4, email = $5, password = $6 WHERE owner_id = $7',
+    [name, picture, company, phone, email, password, id],
     (error, results) => {
       if (error) {
         throw error;
