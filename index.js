@@ -38,9 +38,9 @@ app.post('/login', (req,res) => {
   res.status(401).end()
 })
 
-app.post("/owner", db.createOwner);
-app.put("/owner/:id", verifyJWT, db.updateOwner);
-app.get("/owner", verifyJWT, db.getOwner);
+// app.post("/owner", db.createOwner);
+// app.put("/owner/:id", verifyJWT, db.updateOwner);
+// app.get("/owner", verifyJWT, db.getOwner);
 // app.get("/products/:id", db.getProductById);
 // app.delete("/products/:id", verifyJWT, db.deleteProduct);
 
