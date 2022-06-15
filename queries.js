@@ -31,7 +31,7 @@ const getProductById = (request, response) => {
   );
 };
 
-const createProduct = (request, response) => {
+const createOwner = (request, response) => {
   const { name, price, description, image, category, promo } = request.body;
 
   pool.query(
@@ -47,7 +47,7 @@ const createProduct = (request, response) => {
   );
 };
 
-const updateProduct = (request, response) => {
+const updateOwner = (request, response) => {
   const id = parseInt(request.params.id);
   const { name, price, description, image, category, promo } = request.body;
 
@@ -81,7 +81,7 @@ const deleteProduct = (request, response) => {
 module.exports = {
   getProducts,
   getProductById,
-  createProduct,
-  updateProduct,
+  createOwner,
+  updateOwner,
   deleteProduct,
 };

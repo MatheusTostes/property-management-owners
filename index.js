@@ -24,24 +24,25 @@ function verifyJWT(req, res, next) {
     if(err) return res.status(401).end()
 
     req.userId = decoded.userId
+    console.log(re.userId);
     next()
   })
 }
 
 app.post('/login', (req,res) => {
   if (req.body.user === 'matheus' && req.body.password === '123') {
-    const token = jwt.sign({ userId: 1 }, SECRET, { expiresIn: 300 })
+    const token = jwt.sign({ userId: 1 }, SECRET, { expiresIn: 10800 })
     return res.json({ auth: true, token })
   }
 
   res.status(401).end()
 })
 
-app.get("/products", db.getProducts);
-app.get("/products/:id", db.getProductById);
-app.post("/products", verifyJWT, db.createProduct);
-app.put("/products/:id", verifyJWT, db.updateProduct);
-app.delete("/products/:id", verifyJWT, db.deleteProduct);
+app.post("/owner", db.createOwner);
+app.put("/owner/:id", verifyJWT, db.updateOwner);
+app.get("/owner", verifyJWT, db.getOwner);
+// app.get("/products/:id", db.getProductById);
+// app.delete("/products/:id", verifyJWT, db.deleteProduct);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
