@@ -76,7 +76,7 @@ const createOwner = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`Product added with ID: ${results.insertID}`);
+      response.status(201).send(`Product added with ID: ${request.id}`);
     }
   );
 };
