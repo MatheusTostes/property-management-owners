@@ -16,14 +16,14 @@ const loginOwner = (request, response) => {
       }
 
       const id = results.rows[0].owner_id
-      const email = results.rows[0].email
+      const name = results.rows[0].name
       const pass = results.rows[0].password
 
       if (pass === password) {
         const token = jwt.sign(
           {
             id,
-            email,
+            name,
           },
             SECRET,
           {
@@ -51,21 +51,6 @@ const getOwner = (request, response) => {
   );
 };
 
-// const getProductById = (request, response) => {
-//   const id = parseInt(request.params.id);
-
-//   pool.query(
-//     `SELECT * FROM products WHERE product_id = ${id}`,
-//     // [id],
-//     (error, results) => {
-//       if (error) {
-//         throw error;
-//       }
-//       response.status(200).json(results.rows);
-//     }
-//   );
-// };
-
 const createOwner = (request, response) => {
   const { name, picture, company, phone, email, password } = request.body;
 
@@ -76,7 +61,7 @@ const createOwner = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(201).send(`Product added with ID: ${request.id}`);
+      response.status(201).send(`User ${name} created`);
     }
   );
 };

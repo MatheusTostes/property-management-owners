@@ -49,8 +49,8 @@ app.post('/login', db.loginOwner);
 app.get("/owner", verifyJWT, db.getOwner);
 app.post("/owner", db.createOwner);
 app.put("/owner", verifyJWT, db.updateOwner);
+app.delete("/owner", verifyJWT, db.deleteOwner);
 // app.get("/products/:id", db.getProductById);
-// app.delete("/products/:id", verifyJWT, db.deleteProduct);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
