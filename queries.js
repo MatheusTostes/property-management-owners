@@ -15,22 +15,24 @@ const loginOwner = (request, response) => {
         throw error;
       }
 
-      const id = results.rows[0].owner_id
-      const name = results.rows[0].name
-      const pass = results.rows[0].password
-
-      if (pass === password) {
-        const token = jwt.sign(
-          {
-            id,
-            name,
-          },
-            SECRET,
-          {
-            expiresIn: 10800 
-          }
-        )
-        return response.json({ auth: true, token })
+      if (results.rows[0]) {
+        const id = results.rows[0].owner_id
+        const name = results.rows[0].name
+        const pass = results.rows[0].password
+  
+        if (pass === password) {
+          const token = jwt.sign(
+            {
+              id,
+              name,
+            },
+              SECRET,
+            {
+              expiresIn: 10800 
+            }
+          )
+          return response.json({ auth: true, token })
+        }
       }
 
       response.status(401).end()
@@ -51,8 +53,24 @@ const getOwner = (request, response) => {
   );
 };
 
+const verifyConcurrency = (request, response, email) => {
+  pool.query(
+    `SELECT * FROM owners WHERE email = '${email}'`,
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      if (results.rows[0]) {
+        response.status(401).end()
+      }
+    },
+    );
+}
+
 const createOwner = (request, response) => {
   const { name, picture, company, phone, email, password } = request.body;
+
+  verifyConcurrency(request, response, email)
 
   pool.query(
     `INSERT INTO owners (name, picture, company, phone, email, password) VALUES ($1, $2, $3, $4, $5, $6)`,
