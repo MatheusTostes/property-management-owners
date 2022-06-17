@@ -2,9 +2,8 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
-const Pool = require("pg").Pool;
-const databaseConfig = { connectionString: process.env.DATABASE_URL };
-const pool = new Pool(databaseConfig);
+const db = require("../database/db");
+const { pool } = db
 
 const loginOwner = (request, response) => {
   const { email, password } = request.body
@@ -48,12 +47,43 @@ const getOwner = (request, response) => {
       if (error) {
         throw error;
       }
-      response.status(200).json(results.rows);
+      response.status(200).json(results.rows[0]);
     }
   );
 };
 
-const verifyConcurrency = (request, response, email) => {
+// const verifyConcurrency = (request, response, email) => {
+//   pool.query(
+//     `SELECT * FROM owners WHERE email = '${email}'`,
+//     (error, results) => {
+//       if (error) {
+//         throw error;
+//       }
+//       if (results.rows[0]) {
+//         response.status(401).end()
+//       }
+//     },
+//     );
+// }
+
+// const createOwner = (request, response) => {
+//   const { name, picture, company, phone, email, password } = request.body;
+  
+//   pool.query(
+//     `INSERT INTO owners (name, picture, company, phone, email, password) VALUES ($1, $2, $3, $4, $5, $6)`,
+//     [name, picture, company, phone, email, password],
+//     (error, results) => {
+//       if (error) {
+//         throw error;
+//       }
+//       response.status(201).send(`User ${name} created`);
+//     }
+//   );
+// };
+
+const createOwner = (request, response) => {
+  const { name, picture, company, phone, email, password } = request.body;
+  
   pool.query(
     `SELECT * FROM owners WHERE email = '${email}'`,
     (error, results) => {
@@ -63,25 +93,22 @@ const verifyConcurrency = (request, response, email) => {
       if (results.rows[0]) {
         response.status(401).end()
       }
-    },
-    );
-}
 
-const createOwner = (request, response) => {
-  const { name, picture, company, phone, email, password } = request.body;
-
-  verifyConcurrency(request, response, email)
-
-  pool.query(
-    `INSERT INTO owners (name, picture, company, phone, email, password) VALUES ($1, $2, $3, $4, $5, $6)`,
-    [name, picture, company, phone, email, password],
-    (error, results) => {
-      if (error) {
-        throw error;
+      if (!(results.rows[0])) {
+        pool.query(
+          `INSERT INTO owners (name, picture, company, phone, email, password) VALUES ($1, $2, $3, $4, $5, $6)`,
+          [name, picture, company, phone, email, password],
+          (error, results) => {
+            if (error) {
+              throw error;
+            }
+            response.status(201).send(`User ${name} created`);
+          }
+        );
       }
-      response.status(201).send(`User ${name} created`);
-    }
+    },
   );
+
 };
 
 const updateOwner = (request, response) => {

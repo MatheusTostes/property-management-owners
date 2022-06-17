@@ -3,7 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = 3000;
-const db = require("./queries");
+const ownerActions = require("./queries/ownerQueries");
+const residentActions = require("./queries/residentQueries");
 const cors = require("cors");
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
@@ -45,12 +46,20 @@ function verifyJWT(request, response, next) {
 //   res.status(401).end()
 // })
 
-app.post('/login', db.loginOwner);
-app.get("/owner", verifyJWT, db.getOwner);
-app.post("/owner", db.createOwner);
-app.put("/owner", verifyJWT, db.updateOwner);
-app.delete("/owner", verifyJWT, db.deleteOwner);
-// app.get("/products/:id", db.getProductById);
+app.post('/login', ownerActions.loginOwner);
+app.get("/owner", verifyJWT, ownerActions.getOwner);
+app.post("/owner", ownerActions.createOwner);
+app.put("/owner", verifyJWT, ownerActions.updateOwner);
+app.delete("/owner", verifyJWT, ownerActions.deleteOwner);
+
+app.get("/residents", verifyJWT, residentActions.getResidents);
+app.get("/resident/:id", verifyJWT, residentActions.getResident);
+app.post("/resident", verifyJWT, residentActions.createResident);
+app.put("/resident", verifyJWT, residentActions.updateResident);
+app.delete("/resident", verifyJWT, residentActions.deleteResident);
+
+
+// app.get("/products/:id", ownerActions.getProductById);
 
 app.listen(port, () => {
   console.log(`App running on port ${port}`);
