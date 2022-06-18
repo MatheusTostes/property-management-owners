@@ -69,14 +69,15 @@ const updateResident = (request, response) => {
 
 const deleteResident = (request, response) => {
   const { owner_id } = request
+  const resident_id = parseInt(request.params.resident_id);
 
   pool.query(
-    `DELETE FROM residents WHERE resident_id = ${owner_id}`,
+    `DELETE FROM residents WHERE (resident_id = ${resident_id} AND owner_id = ${owner_id})`,
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`User deleted with ID: ${owner_id}`);
+      response.status(200).send(`Resident deleted with ID: ${resident_id}`);
     }
   );
 };
