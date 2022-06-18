@@ -20,10 +20,11 @@ const getResidents = (request, response) => {
 };
 
 const getResident = (request, response) => {
+  const resident_id = parseInt(request.params.resident_id);
   const { owner_id } = request
 
   pool.query(
-    `SELECT * FROM residents WHERE resident_id ='${resident_id}'`,
+    `SELECT * FROM residents WHERE (resident_id ='${resident_id}' AND owner_id = '${owner_id}')`,
     (error, results) => {
       if (error) {
         throw error;
@@ -34,15 +35,8 @@ const getResident = (request, response) => {
 };
 
 const createResident = (request, response) => {
-  const { name, phone, email, cpf, dependents } = request.body;
   const { owner_id } = request
-
-	// owner_id NUMERIC ( 10 ) NOT NULL,
-	// name VARCHAR ( 50 ) NOT NULL,
-	// phone NUMERIC ( 13 ) NOT NULL,
-	// email VARCHAR ( 50 ),
-  //       cpf NUMERIC ( 11 ) NOT NULL,
-	// dependents VARCHAR ( 255 )
+  const { name, phone, email, cpf, dependents } = request.body;
 
   pool.query(
     `INSERT INTO residents (owner_id, name, phone, email, cpf, dependents) VALUES ($1, $2, $3, $4, $5, $6)`,
@@ -58,16 +52,17 @@ const createResident = (request, response) => {
 
 const updateResident = (request, response) => {
   const { owner_id } = request
-  const { name, picture, company, phone, email, password } = request.body;
+  const resident_id = parseInt(request.params.resident_id);
+  const { name, phone, email, cpf, dependents } = request.body;
 
   pool.query(
-    'UPDATE residents SET name = $1, picture = $2, company = $3, phone = $4, email = $5, password = $6 WHERE resident_id = $7',
-    [name, picture, company, phone, email, password, owner_id],
+    'UPDATE residents SET name = $1, phone = $2, email = $3, cpf = $4, dependents = $5 WHERE (resident_id = $6 AND owner_id = $7)',
+    [name, phone, email, cpf, dependents, resident_id, owner_id],
     (error, results) => {
       if (error) {
         throw error;
       }
-      response.status(200).send(`User modified with ID: ${owner_id}`);
+      response.status(200).send(`Resident ${name} modified with ID: ${resident_id}`);
     }
   );
 };
