@@ -22,7 +22,9 @@ app.get("/", (request, response) => {
 function verifyJWT(request, response, next) {
   const token = request.headers['x-access-token']
   jwt.verify(token, SECRET, (err, decoded) => {
-    if(err) return response.status(401).end()
+    if(err) {
+      return response.status(401).end()
+    }
     request.owner_id = decoded.owner_id
     next()
   })

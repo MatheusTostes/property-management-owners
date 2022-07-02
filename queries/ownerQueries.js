@@ -87,16 +87,16 @@ const updateOwner = (request, response) => {
   const { name, picture, company, phone, email, password } = request.body;
 
   pool.query(
-    `SELECT * FROM owners WHERE email = '${email}'`,
+    `SELECT * FROM owners WHERE owner_id = '${owner_id}'`,
     (error, results) => {
       if (error) {
         throw error;
       }
-      if (results.rows[0]) {
+      if (!results.rows[0]) {
         response.status(401).end()
       }
 
-      if (!(results.rows[0])) {
+      if (results.rows[0]) {
         pool.query(
           'UPDATE owners SET name = $1, picture = $2, company = $3, phone = $4, email = $5, password = $6 WHERE owner_id = $7',
           [name, picture, company, phone, email, password, owner_id],
@@ -110,8 +110,6 @@ const updateOwner = (request, response) => {
       }
     },
   );
-
-  
 };
 
 const deleteOwner = (request, response) => {
