@@ -41,7 +41,6 @@ const loginOwner = (request, response) => {
 
 const getOwner = (request, response) => {
 	const {ownerId} = request;
-	console.log('id aqui', ownerId);
 	pool.query(
 		`SELECT * FROM owners WHERE owner_id ='${ownerId}'`,
 		(error, results) => {
