@@ -1,4 +1,5 @@
 require('dotenv').config();
+const {validationResult} = require('express-validator');
 
 const jwt = require('jsonwebtoken');
 const {SECRET} = process.env;
@@ -54,6 +55,15 @@ const getOwner = (request, response) => {
 };
 
 const createOwner = (request, response) => {
+	const errors = validationResult(request);
+
+	if (!errors.isEmpty()) {
+		return response.status(400).json({
+			success: false,
+			errors: errors.array(),
+		});
+	}
+
 	const {name, picture, company, phone, email, password} = request.body;
 
 	pool.query(

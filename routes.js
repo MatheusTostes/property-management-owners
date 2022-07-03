@@ -1,8 +1,9 @@
 const routes = require('express').Router();
+const {body} = require('express-validator');
 
 const ownerActions = require('./src/queries/ownerQueries');
 const residentActions = require('./src/queries/residentQueries');
-const authActions = require('./src/authenticate/authOwner');
+const authActions = require('./src/middlewares/authOwner');
 
 routes.get('/', (request, response) => {
 	response.json({info: 'Nodejs, Express and Postgres API'});
@@ -10,8 +11,15 @@ routes.get('/', (request, response) => {
 
 routes.post('/login', ownerActions.loginOwner);
 routes.get('/owner', authActions.verifyJWT, ownerActions.getOwner);
-routes.post('/owner', ownerActions.createOwner);
-routes.put('/owner', authActions.verifyJWT, ownerActions.updateOwner);
+routes.post('/owner',
+	body('email').isEmail().normalizeEmail(),
+	body('password').isLength({min: 6}),
+	ownerActions.createOwner);
+routes.put('/owner',
+	body('email').isEmail().normalizeEmail(),
+	body('password').isLength({min: 6}),
+	authActions.verifyJWT,
+	ownerActions.updateOwner);
 routes.delete('/owner', authActions.verifyJWT, ownerActions.deleteOwner);
 
 routes.get('/residents', authActions.verifyJWT, residentActions.getResidents);
