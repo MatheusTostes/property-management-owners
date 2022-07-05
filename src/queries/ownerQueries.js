@@ -98,6 +98,15 @@ const updateOwner = (request, response) => {
 	const {ownerId} = request;
 	const {name, picture, company, phone, email, password} = request.body;
 
+	const errors = validationResult(request);
+
+	if (!errors.isEmpty()) {
+		return response.status(400).json({
+			success: false,
+			errors: errors.array(),
+		});
+	}
+
 	pool.query(
 		`SELECT * FROM owners WHERE owner_id = '${ownerId}'`,
 		(error, results) => {
