@@ -10,13 +10,13 @@ A powerful and user-friendly software solution for managing properties. This sof
 - Communication Platform: Enable easy communication between landlords, property managers and tenants
 
 ## Tech Stack
-[![Node.js](https://img.shields.io/badge/Node.js-Latest_version-brightgreen.svg)](https://nodejs.org/)
-[![React](https://img.shields.io/badge/React-Latest_version-61DAFB.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-Latest_version-2C8EBF.svg)](https://vitejs.dev/)
-[![MaterialUI](https://img.shields.io/badge/MaterialUI-Latest_version-0081CB.svg)](https://material-ui.com/)
-[![Express](https://img.shields.io/badge/Express-Latest_version-1948D1.svg)](https://expressjs.com/)
-[![Sequelize](https://img.shields.io/badge/Sequelize-Latest_version-FECE44.svg)](http://docs.sequelizejs.com/)
-[![MySQL](https://img.shields.io/badge/MySQL-Latest_version-4479A1.svg)](https://www.mysql.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-18.13.0-brightgreen.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-4.0-2C8EBF.svg)](https://vitejs.dev/)
+[![MaterialUI](https://img.shields.io/badge/MaterialUI-5.11.6-0081CB.svg)](https://material-ui.com/)
+[![Express](https://img.shields.io/badge/Express-4.18.2-1948D1.svg)](https://expressjs.com/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-6.28.0-FECE44.svg)](http://docs.sequelizejs.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1.svg)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-Latest_version-0DB7ED.svg)](https://www.docker.com/)
 [![ContextApi](https://img.shields.io/badge/ContextApi-Latest_version-61DAFB.svg)](https://reactjs.org/docs/context.html)
 
