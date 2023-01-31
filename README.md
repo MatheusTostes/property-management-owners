@@ -17,8 +17,8 @@ A powerful and user-friendly software solution for managing properties. This sof
 [![Express](https://img.shields.io/badge/Express-4.18.2-1948D1.svg)](https://expressjs.com/)
 [![Sequelize](https://img.shields.io/badge/Sequelize-6.28.0-FECE44.svg)](http://docs.sequelizejs.com/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1.svg)](https://www.mysql.com/)
-[![Docker](https://img.shields.io/badge/Docker-Latest_version-0DB7ED.svg)](https://www.docker.com/)
-[![ContextApi](https://img.shields.io/badge/ContextApi-Latest_version-61DAFB.svg)](https://reactjs.org/docs/context.html)
+[![Docker](https://img.shields.io/badge/Docker-20.10.23-0DB7ED.svg)](https://www.docker.com/)
+[![ContextApi](https://img.shields.io/badge/ContextApi--61DAFB.svg)](https://reactjs.org/docs/context.html)
 
 
 ## Routes
